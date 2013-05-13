@@ -40,6 +40,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="LinqBridge">
+      <HintPath>.\LinqBridge.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -65,10 +68,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ImageResources\AddFromDocear.png" />
     <Content Include="JavaScript\JSRunner.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="_Changes.txt" />
+    <Content Include="_DevNotes.txt" />
     <Content Include="_Notes.txt" />
     <Content Include="_Todo.txt" />
     <None Include="Loader\adxloader.dll.manifest" />

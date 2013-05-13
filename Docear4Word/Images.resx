@@ -121,6 +121,10 @@
   <data name="AboutSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ImageResources\AboutSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AddFromDocear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>imageresources\addfromdocear.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AddReferenceSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ImageResources\AddReferenceSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,7 +152,6 @@
   <data name="LogoVeryTiny" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>imageresources\logoverytiny.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="MoveNextSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>imageresources\movenextsmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

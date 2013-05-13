@@ -60,8 +60,6 @@
 			this.lblSimon = new System.Windows.Forms.Label();
 			this.lblCopyright = new System.Windows.Forms.Label();
 			this.footer = new Docear4Word.Forms.DialogFooter();
-			this.lblPersonalDataFolder = new System.Windows.Forms.Label();
-			this.llPersonalDataFolder = new System.Windows.Forms.LinkLabel();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -76,7 +74,7 @@
 			this.panel1.Controls.Add(this.btnClose);
 			this.panel1.Controls.Add(this.pictureBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 377);
+			this.panel1.Location = new System.Drawing.Point(0, 356);
 			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(680, 52);
@@ -126,7 +124,7 @@
 			this.llHomePage.AutoEllipsis = true;
 			this.llHomePage.AutoSize = true;
 			this.llHomePage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llHomePage.Location = new System.Drawing.Point(160, 45);
+			this.llHomePage.Location = new System.Drawing.Point(152, 45);
 			this.llHomePage.Margin = new System.Windows.Forms.Padding(3);
 			this.llHomePage.Name = "llHomePage";
 			this.llHomePage.Size = new System.Drawing.Size(555, 17);
@@ -154,7 +152,7 @@
 			this.llContactAndSupport.AutoEllipsis = true;
 			this.llContactAndSupport.AutoSize = true;
 			this.llContactAndSupport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llContactAndSupport.Location = new System.Drawing.Point(160, 68);
+			this.llContactAndSupport.Location = new System.Drawing.Point(152, 68);
 			this.llContactAndSupport.Margin = new System.Windows.Forms.Padding(3);
 			this.llContactAndSupport.Name = "llContactAndSupport";
 			this.llContactAndSupport.Size = new System.Drawing.Size(555, 17);
@@ -171,7 +169,7 @@
 			this.llApplicationFolder.AutoEllipsis = true;
 			this.llApplicationFolder.AutoSize = true;
 			this.llApplicationFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llApplicationFolder.Location = new System.Drawing.Point(160, 91);
+			this.llApplicationFolder.Location = new System.Drawing.Point(152, 91);
 			this.llApplicationFolder.Margin = new System.Windows.Forms.Padding(3);
 			this.llApplicationFolder.Name = "llApplicationFolder";
 			this.llApplicationFolder.Size = new System.Drawing.Size(555, 17);
@@ -210,7 +208,7 @@
 			this.llCitationStyleFolder.AutoEllipsis = true;
 			this.llCitationStyleFolder.AutoSize = true;
 			this.llCitationStyleFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llCitationStyleFolder.Location = new System.Drawing.Point(160, 114);
+			this.llCitationStyleFolder.Location = new System.Drawing.Point(152, 114);
 			this.llCitationStyleFolder.Margin = new System.Windows.Forms.Padding(3);
 			this.llCitationStyleFolder.Name = "llCitationStyleFolder";
 			this.llCitationStyleFolder.Size = new System.Drawing.Size(555, 17);
@@ -238,7 +236,7 @@
 			this.llBibTexFileFolder.AutoEllipsis = true;
 			this.llBibTexFileFolder.AutoSize = true;
 			this.llBibTexFileFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llBibTexFileFolder.Location = new System.Drawing.Point(160, 137);
+			this.llBibTexFileFolder.Location = new System.Drawing.Point(152, 137);
 			this.llBibTexFileFolder.Margin = new System.Windows.Forms.Padding(3);
 			this.llBibTexFileFolder.Name = "llBibTexFileFolder";
 			this.llBibTexFileFolder.Size = new System.Drawing.Size(555, 17);
@@ -251,7 +249,7 @@
 			// 
 			this.lblLicence.AutoSize = true;
 			this.lblLicence.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLicence.Location = new System.Drawing.Point(8, 183);
+			this.lblLicence.Location = new System.Drawing.Point(8, 160);
 			this.lblLicence.Margin = new System.Windows.Forms.Padding(3);
 			this.lblLicence.Name = "lblLicence";
 			this.lblLicence.Size = new System.Drawing.Size(61, 17);
@@ -266,7 +264,7 @@
 			this.llLicence.AutoEllipsis = true;
 			this.llLicence.AutoSize = true;
 			this.llLicence.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llLicence.Location = new System.Drawing.Point(160, 183);
+			this.llLicence.Location = new System.Drawing.Point(152, 160);
 			this.llLicence.Margin = new System.Windows.Forms.Padding(3);
 			this.llLicence.Name = "llLicence";
 			this.llLicence.Size = new System.Drawing.Size(555, 17);
@@ -279,7 +277,7 @@
 			// 
 			this.lblCredits.AutoSize = true;
 			this.lblCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCredits.Location = new System.Drawing.Point(8, 221);
+			this.lblCredits.Location = new System.Drawing.Point(8, 198);
 			this.lblCredits.Margin = new System.Windows.Forms.Padding(3);
 			this.lblCredits.Name = "lblCredits";
 			this.lblCredits.Size = new System.Drawing.Size(56, 17);
@@ -291,10 +289,10 @@
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 561F));
-			this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 9);
+			this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 8);
 			this.tableLayoutPanel1.Controls.Add(this.lblCopyright, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.lblHomePage, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.llLicence, 1, 7);
+			this.tableLayoutPanel1.Controls.Add(this.llLicence, 1, 6);
 			this.tableLayoutPanel1.Controls.Add(this.llBibTexFileFolder, 1, 5);
 			this.tableLayoutPanel1.Controls.Add(this.llHomePage, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.llCitationStyleFolder, 1, 4);
@@ -303,17 +301,14 @@
 			this.tableLayoutPanel1.Controls.Add(this.lblApplicationFolder, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.llContactAndSupport, 1, 2);
 			this.tableLayoutPanel1.Controls.Add(this.lblCitationStyleFolder, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.lblCredits, 0, 9);
-			this.tableLayoutPanel1.Controls.Add(this.lblLicence, 0, 7);
+			this.tableLayoutPanel1.Controls.Add(this.lblCredits, 0, 8);
+			this.tableLayoutPanel1.Controls.Add(this.lblLicence, 0, 6);
 			this.tableLayoutPanel1.Controls.Add(this.lblBibTexFileFolder, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.lblPersonalDataFolder, 0, 6);
-			this.tableLayoutPanel1.Controls.Add(this.llPersonalDataFolder, 1, 6);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
-			this.tableLayoutPanel1.RowCount = 11;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowCount = 10;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -324,7 +319,8 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(680, 429);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(680, 408);
 			this.tableLayoutPanel1.TabIndex = 15;
 			// 
 			// panel4
@@ -333,7 +329,7 @@
 			this.panel4.Controls.Add(this.flowLayoutPanel1);
 			this.panel4.Controls.Add(this.flpDevelopment);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(157, 221);
+			this.panel4.Location = new System.Drawing.Point(149, 198);
 			this.panel4.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(558, 150);
@@ -489,7 +485,7 @@
 			this.lblCopyright.Location = new System.Drawing.Point(8, 10);
 			this.lblCopyright.Margin = new System.Windows.Forms.Padding(3, 5, 3, 15);
 			this.lblCopyright.Name = "lblCopyright";
-			this.lblCopyright.Size = new System.Drawing.Size(707, 17);
+			this.lblCopyright.Size = new System.Drawing.Size(699, 17);
 			this.lblCopyright.TabIndex = 2;
 			this.lblCopyright.Text = "(C) 2012 Docear by Joeran Beel, Stefan Langer, Marcel Genzmehr, and others";
 			// 
@@ -497,7 +493,7 @@
 			// 
 			this.footer.AutoSize = true;
 			this.footer.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.footer.Location = new System.Drawing.Point(0, 429);
+			this.footer.Location = new System.Drawing.Point(0, 408);
 			this.footer.MaximumSize = new System.Drawing.Size(0, 21);
 			this.footer.MinimumSize = new System.Drawing.Size(0, 21);
 			this.footer.Name = "footer";
@@ -506,39 +502,11 @@
 			this.footer.TabIndex = 2;
 			this.footer.TabStop = false;
 			// 
-			// lblPersonalDataFolder
-			// 
-			this.lblPersonalDataFolder.AutoSize = true;
-			this.lblPersonalDataFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPersonalDataFolder.Location = new System.Drawing.Point(8, 160);
-			this.lblPersonalDataFolder.Margin = new System.Windows.Forms.Padding(3);
-			this.lblPersonalDataFolder.Name = "lblPersonalDataFolder";
-			this.lblPersonalDataFolder.Size = new System.Drawing.Size(146, 17);
-			this.lblPersonalDataFolder.TabIndex = 15;
-			this.lblPersonalDataFolder.Text = "Personal Data Folder:";
-			// 
-			// llPersonalDataFolder
-			// 
-			this.llPersonalDataFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.llPersonalDataFolder.AutoEllipsis = true;
-			this.llPersonalDataFolder.AutoSize = true;
-			this.llPersonalDataFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.llPersonalDataFolder.Location = new System.Drawing.Point(160, 160);
-			this.llPersonalDataFolder.Margin = new System.Windows.Forms.Padding(3);
-			this.llPersonalDataFolder.Name = "llPersonalDataFolder";
-			this.llPersonalDataFolder.Size = new System.Drawing.Size(555, 17);
-			this.llPersonalDataFolder.TabIndex = 16;
-			this.llPersonalDataFolder.TabStop = true;
-			this.llPersonalDataFolder.Text = "C:\\Users\\Simon\\Docear4Word\\BibTex";
-			this.llPersonalDataFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnLinkClicked);
-			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.btnClose;
 			this.CancelButton = this.btnClose;
-			this.ClientSize = new System.Drawing.Size(680, 454);
+			this.ClientSize = new System.Drawing.Size(680, 433);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.footer);
@@ -603,7 +571,5 @@
 		private System.Windows.Forms.Label lblDevelopment;
 		private System.Windows.Forms.Label lblSimon;
 		private DialogFooter footer;
-		private System.Windows.Forms.Label lblPersonalDataFolder;
-		private System.Windows.Forms.LinkLabel llPersonalDataFolder;
 	}
 }

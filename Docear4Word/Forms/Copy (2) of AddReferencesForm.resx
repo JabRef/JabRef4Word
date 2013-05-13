@@ -126,13 +126,4 @@
   <metadata name="bsSelectableReferences.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>196, 17</value>
-  </metadata>
-  <data name="btnPaste.ToolTip" xml:space="preserve">
-    <value>When you copy several BibTeX keys to your clipboard in Docear, e.g. 'miller2000, smith89, johnson2007', and press this button,
-Docear4Word will automatically select the entries matching the BibTeX keys miller2000, smith89 and johnson2007. 
-
-Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. </value>
-  </data>
 </root>

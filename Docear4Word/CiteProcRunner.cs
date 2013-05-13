@@ -18,7 +18,7 @@ namespace Docear4Word
 	{
 		const string CreateEngineCommand = "CreateEngine";
 		const string SetOutputFormatCommand = "setOutputFormat";
-		const string RestoreProcessorStateCommand = "restoreProcessorState";
+		const string RebuildProcessorStateCommand = "rebuildProcessorState";
 		const string AppendCitationClusterCommand = "appendCitationCluster";
 		const string ProcessCitationClusterCommand = "processCitationCluster";
 		const string MakeBibliographyCommand = "makeBibliography";
@@ -77,7 +77,7 @@ namespace Docear4Word
 
 		public void ResetProcessorState()
 		{
-			CallMethod(RestoreProcessorStateCommand, null);
+			CallMethod(RebuildProcessorStateCommand, null, null);
 
 			jsRawCitationItemCache.Clear();
 		}
@@ -88,15 +88,14 @@ namespace Docear4Word
 		/// </summary>
 		/// <param name="jsCitations">An array of JS citations.</param>
 		/// <returns></returns>
+/*
 		public JSProcessCitationResult RestoreProcessorState(object[] jsCitations)
 		{
 			if (jsCitations == null) throw new ArgumentNullException("jsCitations");
 
 			var jsCitationArray = CreateJSArray(jsCitations);
 
-			var jsResult = CallMethod(RestoreProcessorStateCommand, jsCitationArray);
-
-			var oldResult = CreateJSProcessCitationResult(jsResult);
+			CallMethod(RebuildProcessorStateCommand, jsCitationArray, null);
 
 			var items = new JSProcessCitationIndexStringPair[jsCitations.Length];
 
@@ -109,7 +108,19 @@ namespace Docear4Word
 				           	};
 			}
 
-			return new JSProcessCitationResult(oldResult.Data, items);
+			return new JSProcessCitationResult(items);
+		}
+*/
+
+		public JSProcessCitationResult RestoreProcessorState(object[] jsCitations)
+		{
+			if (jsCitations == null) throw new ArgumentNullException("jsCitations");
+
+			var jsCitationArray = CreateJSArray(jsCitations);
+
+			var jsResult = CallMethod(RebuildProcessorStateCommand, jsCitationArray, null);
+
+			return CreateJSProcessCitationResult(jsResult);
 		}
 
 		public JSProcessCitationResult ProcessCitation(JSInlineCitation citation, object citationsPre, object citationsPost)
@@ -119,19 +130,11 @@ namespace Docear4Word
 			return CreateJSProcessCitationResult(jsResult);
 		}
 
-		JSProcessCitationResult CreateJSProcessCitationResult(object jsResult, bool isAppend = false)
+		JSProcessCitationResult CreateJSProcessCitationResult(object jsResult)
 		{
 			if (jsResult == null) return null;
 
-			JSProcessCitationResult.JSProcessCitationDataResult data = null;
 			var jsResultArray = ExtractJSArray(jsResult);
-
-			if (!isAppend && jsResultArray.Count > 0)
-			{
-				data = new JSProcessCitationResult.JSProcessCitationDataResult(this, jsResultArray[0]);
-				var itemsArray = jsResultArray[1];
-				jsResultArray = ExtractJSArray(itemsArray);
-			}
 
 			var items = new JSProcessCitationIndexStringPair[jsResultArray.Count];
 
@@ -141,19 +144,21 @@ namespace Docear4Word
 
 				items[i] = new JSProcessCitationIndexStringPair
 				           	{
-				           		Index = (int) jsItem[0],
-				           		String = (string) jsItem[1]
+								Index = i,
+								ID = (string) jsItem[0],
+				           		NoteIndex = (int) jsItem[1],
+				           		String = (string) jsItem[2]
 				           	};
 			}
 
-			return new JSProcessCitationResult(data, items);
+			return new JSProcessCitationResult(items);
 		}
 
 		public string AppendCitation(JSInlineCitation citation)
 		{
 			var jsResult = CallMethod(AppendCitationClusterCommand, citation.JSObject, true);
 			
-			var result = CreateJSProcessCitationResult(jsResult, true);
+			var result = CreateJSProcessCitationResult(jsResult);
 
 			return result.Items[0].String;
 		}
@@ -264,6 +269,8 @@ namespace Docear4Word
 			       	{
 			       		ID = itemSource.Entry.Name, // Note no '#'!!
 			       		Locator = itemSource.PageNumberOverride,
+						AuthorOnly = itemSource.AuthorProcessorControl == AuthorProcessorControl.AuthorOnly ? (object) 1 : null,
+						SuppressAuthor = itemSource.AuthorProcessorControl == AuthorProcessorControl.SuppressAuthor ? (object) 1 : null,
 			       		ItemData = FetchOrCreateJSRawCitationItem(itemSource.ID)
 			       	};
 		}

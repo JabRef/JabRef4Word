@@ -30,8 +30,7 @@ namespace Docear4Word.Forms
 		{
 			llLicence.Text = Path.Combine(FolderHelper.ApplicationRootDirectory, "licence.txt");
 			llCitationStyleFolder.Text = FolderHelper.DocearStylesFolder;
-			llBibTexFileFolder.Text = Settings.Instance.GetDefaultDatabaseFolder();
-			llPersonalDataFolder.Text = FolderHelper.DocearPersonalDataFolder;
+			llBibTexFileFolder.Text = FolderHelper.DocearPersonalDataFolder;
 			llApplicationFolder.Text = FolderHelper.ApplicationRootDirectory;
 
 			var assembly = Assembly.GetExecutingAssembly();

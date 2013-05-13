@@ -702,6 +702,8 @@ namespace Docear4Word
 			try
 			{
 				mainController.DoAddReference();
+
+				SetFocusToActiveDocument();
 			}
 			catch (Exception ex)
 			{
@@ -714,6 +716,8 @@ namespace Docear4Word
 			try
 			{
 				mainController.DoEditReference();
+
+				SetFocusToActiveDocument();
 			}
 			catch (Exception ex)
 			{
@@ -750,6 +754,8 @@ namespace Docear4Word
 			try
 			{
 				mainController.DoShowSettingsDialog();
+
+				SetFocusToActiveDocument();
 			}
 			catch (Exception ex)
 			{
@@ -762,11 +768,25 @@ namespace Docear4Word
 			try
 			{
 				mainController.DoShowAboutDialog();
+
+				SetFocusToActiveDocument();
 			}
 			catch (Exception ex)
 			{
 				LogException(ex);
 			}
+		}
+
+		void SetFocusToActiveDocument()
+		{
+			try
+			{
+				if (WordApp.Documents.Count == 0) return;
+
+				WordApp.ActiveDocument.ActiveWindow.SetFocus();
+			}
+			catch
+			{}
 		}
 
 		void DoChangeStyle(string styleName)

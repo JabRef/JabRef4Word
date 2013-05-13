@@ -9,6 +9,7 @@ namespace Docear4Word
 		readonly Entry entry;
 		readonly string pageNumberOverride;
 		readonly string id;
+		readonly string authors;
 
 		public EntryAndPagePair(Entry entry, string pageNumberOverride = null)
 		{
@@ -27,6 +28,8 @@ namespace Docear4Word
 			id = this.pageNumberOverride == null
 			     	? entry.Name
 			     	: entry.Name + "#" + pageNumberOverride;
+
+			authors = entry["author", TagEntry.Empty].Display.Trim();
 		}
 
 		public Entry Entry
@@ -49,7 +52,20 @@ namespace Docear4Word
 		{
 			get { return id; }
 		}
+
+		public string Authors
+		{
+			get { return authors; }
+		}
+
+		public AuthorProcessorControl AuthorProcessorControl { get; set;}
 	}
 
-
+	public enum AuthorProcessorControl
+	{
+		Standard,
+		AuthorOnly,
+		SuppressAuthor,
+		SplitAuthor // Only used for a first insertion
+	}
 }

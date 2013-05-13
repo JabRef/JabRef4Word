@@ -9,6 +9,8 @@ using Office;
 
 using Word;
 
+using System.Linq;
+
 namespace Docear4Word
 {
 	public partial class DocumentController
@@ -166,27 +168,98 @@ namespace Docear4Word
 			}
 		}
 
-		public void InsertCitationSequence(IEnumerable<EntryAndPagePair> itemSources, bool isLineSequence)
+		static List<EntryAndPagePair[]> GroupByAuthor(List<EntryAndPagePair> entries)
 		{
+			var result = new List<EntryAndPagePair[]>();
+			var noAuthorDistinguisher = 0;
+
+			var authorGroupings = entries
+				.GroupBy(entry => !string.IsNullOrEmpty(entry.Authors) ? entry.Authors : "_" + (++noAuthorDistinguisher).ToString())
+				.OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase);
+
+			foreach (var authorGroup in authorGroupings)
+			{
+				result.Add(authorGroup.ToArray());
+			}
+
+			return result;
+		}
+
+		public void DoInsertCitation(List<EntryAndPagePair> allEntries, bool isSequence, bool isLineSequence)
+		{
+			if (allEntries == null || allEntries.Count == 0) return;
+
+			var authorProcessorControl = allEntries[0].AuthorProcessorControl;
+			var isStandard = authorProcessorControl == AuthorProcessorControl.Standard;
+			var isSplitAuthor = authorProcessorControl == AuthorProcessorControl.SplitAuthor;
+			var isAuthorOnly = authorProcessorControl == AuthorProcessorControl.AuthorOnly;
+			var isSuppressAuthor = authorProcessorControl == AuthorProcessorControl.SuppressAuthor;
+
+			var insertionEntryList = new List<InsertionEntry>();
+
 			try
 			{
 				isUpdating = true;
 
-				foreach (var itemSource in itemSources)
+				// Is this a standard, non-sequential reference?
+				if (isStandard && !isSequence)
 				{
-					if (isLineSequence)
-					{
-						document.Application.Selection.TypeText("\v");
-					}
-					else
-					{
-						document.Application.Selection.TypeParagraph();
-					}
-
-					var citation = CreateInlineCitation(new[] { itemSource });
-
-					InsertCitationCore(citation);
+					// Yes, so we have one Citation with all the entries
+					insertionEntryList.Add(new InlineCitationInsertionEntry(CreateInlineCitation(allEntries)));
 				}
+				// Is this a standard reference but sequential?
+				else if (isStandard)
+				{
+					// Yes, so we add each entry as a separate Citation
+					for (var i = 0; i < allEntries.Count; i++)
+					{
+						var entry = allEntries[i];
+
+						// Add a list separator except before the first item
+						if (i > 0) insertionEntryList.Add(new SeparatorInsertionEntry(null, true, isLineSequence));
+
+						// Add the citation
+						insertionEntryList.Add(new InlineCitationInsertionEntry(CreateInlineCitation(new[] { entry })));
+					}
+				}
+				else
+				{
+					// This is a non-standard reference, so we group by Author
+					var authorGroups = GroupByAuthor(allEntries);
+
+					// Go through each author group
+					for (var i = 0; i < authorGroups.Count; i++)
+					{
+						// Get the entries for this author
+						var authorEntries = authorGroups[i];
+
+						// Add a list separator except before the first item
+						if (i > 0) insertionEntryList.Add(new SeparatorInsertionEntry(i < allEntries.Count - 1 ? ", " : " and ", isSequence, isLineSequence));
+
+						if (isSplitAuthor || isAuthorOnly)
+						{
+							// Add the AuthorOnly part
+							foreach (var authorEntry in authorEntries) authorEntry.AuthorProcessorControl = AuthorProcessorControl.AuthorOnly;
+							insertionEntryList.Add(new InlineCitationInsertionEntry(CreateInlineCitation(new [] { authorEntries[0] })));
+						}
+
+						if (isSplitAuthor)
+						{
+							// Add an Author/SuppressAuthor separator
+							insertionEntryList.Add(new SeparatorInsertionEntry(" "));
+						}
+
+						if (isSplitAuthor || isSuppressAuthor)
+						{
+							// Add the SuppressAuthor part
+							foreach (var authorEntry in authorEntries) authorEntry.AuthorProcessorControl = AuthorProcessorControl.SuppressAuthor;
+							insertionEntryList.Add(new InlineCitationInsertionEntry(CreateInlineCitation(authorEntries)));
+						}
+					}
+				}
+
+				// Perform the insertion
+				InsertItemsList(insertionEntryList);
 			}
 			finally
 			{
@@ -196,7 +269,53 @@ namespace Docear4Word
 
 		public void InsertCitation(List<EntryAndPagePair> entryAndPagePairs)
 		{
-			InsertCitationCore(CreateInlineCitation(entryAndPagePairs));
+			if (entryAndPagePairs == null || entryAndPagePairs.Count == 0) return;
+
+			var authorProcessorControl = entryAndPagePairs[0].AuthorProcessorControl;
+			var isCreatingAuthorPair = false;
+
+			if (authorProcessorControl == AuthorProcessorControl.SplitAuthor)
+			{
+				isCreatingAuthorPair = true;
+
+				foreach (var entryAndPagePair in entryAndPagePairs)
+				{
+					entryAndPagePair.AuthorProcessorControl = AuthorProcessorControl.AuthorOnly;
+				}
+			}
+
+			var inlineCitation = CreateInlineCitation(entryAndPagePairs);
+			InsertCitationCore(inlineCitation);
+
+			if (isCreatingAuthorPair)
+			{
+				foreach (var entryAndPagePair in entryAndPagePairs)
+				{
+					entryAndPagePair.AuthorProcessorControl = AuthorProcessorControl.SuppressAuthor;
+				}
+
+				inlineCitation = CreateInlineCitation(entryAndPagePairs);
+				InsertCitationCore(inlineCitation);
+			}
+		}
+
+		void InsertItemsList(IEnumerable<InsertionEntry> insertionEntries)
+		{
+			try
+			{
+				isUpdating = true;
+
+				var selection = document.Application.Selection;
+				selection.Collapse(WdCollapseDirection.wdCollapseEnd);
+				var range = selection.Range;
+
+				var inserter = new CitationInserter(this);
+				inserter.InsertItemsList(range, insertionEntries);
+			}
+			finally
+			{
+				isUpdating = false;
+			}
 		}
 
 		void InsertCitationCore(JSInlineCitation citation)

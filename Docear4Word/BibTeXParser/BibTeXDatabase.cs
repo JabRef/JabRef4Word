@@ -68,6 +68,25 @@ namespace Docear4Word.BibTex
 			}
 		}
 
+		public Entry FindMatch(string key)
+		{
+			var result = this[key];
+
+			if (result == null)
+			{
+				foreach (var entry in entries)
+				{
+					if (string.Compare(entry.Name, key, StringComparison.OrdinalIgnoreCase) == 0)
+					{
+						result = entry;
+						break;
+					}
+				}
+			}
+
+			return result;
+		}
+
 		public string GetAbbreviation(string key, string defaultValue = "Abbreviation Not Found")
 		{
 			string result;

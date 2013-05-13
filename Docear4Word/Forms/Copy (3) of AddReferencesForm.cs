@@ -18,7 +18,6 @@ namespace Docear4Word.Forms
 		static int LastHeight = -1;
 
 		readonly ReferenceFilter referenceFilter = new ReferenceFilter { FilterType = FilterType.And };
-		readonly TransparentControl btnPasteCover;
 
 		BibTexDatabase database;
 		BindingListAce<SelectableReference> source;
@@ -38,9 +37,6 @@ namespace Docear4Word.Forms
 			rbAuthorOnly.Tag = AuthorProcessorControl.AuthorOnly;
 			rbAuthorSuppressAuthor.Tag = AuthorProcessorControl.SuppressAuthor;
 			rbSplitAuthor.Tag = AuthorProcessorControl.SplitAuthor;
-
-			btnPasteCover = new TransparentControl(btnPaste);
-			toolTip.SetToolTip(btnPasteCover, toolTip.GetToolTip(btnPaste));
 		}
 
 		public BibTexDatabase Database
@@ -77,7 +73,7 @@ namespace Docear4Word.Forms
 
 			Icon = ImageHelper.CreateIcon(Images.AddReferenceSmall, 15, true);
 
-			UpdatePasteAndSelectButton();
+			UpdateClipboardButton();
 
 			StartListenToClipboard();
 		}
@@ -110,179 +106,28 @@ namespace Docear4Word.Forms
 		{
 			if (m.Msg == NativeMethods.WM_CLIPBOARDUPDATE)
 			{
-				UpdatePasteAndSelectButton();
+				UpdateClipboardButton();
 			}
 
 			base.WndProc(ref m);
 		}
-/*
 
-When you copy several BibTeX keys to your clipboard in Docear, e.g. 'miller2000, smith89, johnson2007', and press this button,
-Docear4Word will automatically select the entries matching the BibTeX keys miller2000, smith89 and johnson2007. 
-
-Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. */
-		void UpdatePasteAndSelectButton()
+		void UpdateClipboardButton()
 		{
-			var clipboardText = SafeClipboardGetText();
-			var canPaste = clipboardText != null && allEntries.Count > 0;
-
-			if (canPaste)
-			{
-				var pasteAndSelectInfo = new PasteAndSelectInfo(clipboardText, allEntries);
-
-				string tooltipText;
-
-				if (pasteAndSelectInfo.ExactMatchCount == 0)
-				{
-					tooltipText = string.Format("Docear4Word cannot match any of the entries on the clipboard:\r\n    {0}", pasteAndSelectInfo.CreateOriginalNamesList(", "));
-				}
-				else if (pasteAndSelectInfo.NonMatchCount == 0)
-				{
-					tooltipText = string.Format("Docear4Word will match all of the Entries on the clipboard:\r\n    {0}", pasteAndSelectInfo.CreateOriginalNamesList(", "));
-				}
-				else
-				{
-					tooltipText = string.Format("Docear4Word will match some of the entries on the clipboard:\r\n    {0}\r\n\r\nThe remainder will be left as a filter for manual matching:\r\n    {1}", 
-						pasteAndSelectInfo.CreateExactMatchList(", "), pasteAndSelectInfo.CreateNonMatchList(", "));
-				}
-
-				btnPaste.Enabled = true;
-				toolTip.SetToolTip(btnPaste, tooltipText);
-			}
-			else
-			{
-				btnPaste.Enabled = false;
-				toolTip.SetToolTip(btnPaste, null);
-			}
-
-			btnPasteCover.Visible = !btnPaste.Enabled;
+			btnPaste.Enabled = Database != null && Clipboard.ContainsText();
 		}
 
-		static string SafeClipboardGetText()
+		void PasteAndSelect()
 		{
 			try
 			{
-				if (!Clipboard.ContainsText()) return null;
-
-				return Clipboard.GetText();
-			}
-			catch
-			{
-				return null;
-			}
-		}
-
-		class PasteAndSelectInfo
-		{
-			readonly string[] originalNames;
-			readonly SelectableReference[] exactMatches;
-			readonly string[] nonMatches;
- 
-			public PasteAndSelectInfo(string text, List<SelectableReference> allEntries)
-			{
-				text = text.Replace('\r', ' ');
-				text = text.Replace('\n', ' ');
-
-				originalNames = text.Split(new[] { ',', ';', '|', ' '}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim()).Distinct().ToArray();
-
-				var exactMatchList = new List<SelectableReference>();
-				var nonMatchList = new List<string>();
-
-				foreach (var name in originalNames)
+				if (!Clipboard.ContainsText())
 				{
-					var match = allEntries.Find(reference => string.Compare(reference.ID,  name, StringComparison.OrdinalIgnoreCase) == 0);
-
-					if (match != null)
-					{
-						exactMatchList.Add(match);
-					}
-					else
-					{
-						nonMatchList.Add(name);
-					}
+					btnPaste.Enabled = false;
+					return;
 				}
 
-				exactMatches = exactMatchList.ToArray();
-				nonMatches = nonMatchList.ToArray();
-			}
-
-			public void SelectMatches()
-			{
-				foreach (var entry in exactMatches)
-				{
-					entry.Selected = true;
-				}
-			}
-
-			public int ExactMatchCount
-			{
-				get { return exactMatches.Length; }
-			}
-
-			public int NonMatchCount
-			{
-				get { return nonMatches.Length; }
-			}
-
-			public string CreateOriginalNamesList(string separator)
-			{
-				return CreateLimitedList(separator, originalNames);
-			}
-
-			public string CreateExactMatchList(string separator)
-			{
-				return CreateLimitedList(separator, exactMatches.Select(ex => ex.ID).ToArray());
-			}
-
-			public string CreateNonMatchList(string separator)
-			{
-				return CreateLimitedList(separator, nonMatches);
-			}
-
-			static string CreateLimitedList(string separator, string[] list)
-			{
-				var result = string.Join(separator, list);
-				if (result.Length > 1024)
-				{
-					result = result.Substring(0, 512) + "...";
-				}
-
-				return result;
-			}
-		}
-
-		bool DoPasteAndSelect(string text)
-		{
-			if (string.IsNullOrEmpty(text)) return false;
-
-			var pasteAndSelectInfo = new PasteAndSelectInfo(text, allEntries);
-
-			pasteAndSelectInfo.SelectMatches();
-
-			if (pasteAndSelectInfo.NonMatchCount > 0)
-			{
-				cmbYear.SelectedIndex = 0;
-
-				if (pasteAndSelectInfo.NonMatchCount > 1)
-				{
-					rbOr.Checked = true;
-				}
-			}
-
-			txtFilter.Text = pasteAndSelectInfo.CreateNonMatchList(" ");
-
-			UpdateFilter();
-
-			return true;
-		}
-
-		void btnPaste_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				var clipboardText = SafeClipboardGetText();
-
-				if (DoPasteAndSelect(clipboardText))
+				if (DoSelect(Clipboard.GetText()))
 				{
 //					Clipboard.Clear();
 				}
@@ -291,6 +136,65 @@ Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. */
 			{
 				Helper.LogUnexpectedException("Failing whilst pasting text", ex);
 			}
+		}
+
+		bool DoSelect(string text)
+		{
+			if (string.IsNullOrEmpty(text)) return false;
+
+			text = text.Replace('\r', ' ');
+			text = text.Replace('\n', ' ');
+
+			var names = text.Split(new[] { ',', ';', '|', ' '}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+
+			var exactMatches = new List<string>();
+			var nonMatches = new List<string>();
+
+			foreach (var selectableRefence in allEntries)
+			{
+				selectableRefence.Selected = false;
+			}
+
+			foreach (var name in names)
+			{
+				var entry = Database.FindMatch(name);
+
+				if (entry == null)
+				{
+					nonMatches.Add(name);
+				}
+				else
+				{
+					exactMatches.Add(entry.Name);
+				}
+			}
+
+			foreach (var name in exactMatches)
+			{
+				var entry = allEntries.Find(reference => reference.ID == name);
+				entry.Selected = true;
+			}
+
+			if (nonMatches.Count > 0)
+			{
+				cmbYear.SelectedIndex = 0;
+
+				if (nonMatches.Count > 1)
+				{
+					rbOr.Checked = true;
+				}
+			}
+
+			txtFilter.Text = string.Join(" ", nonMatches.ToArray());
+
+			UpdateFilter();
+
+			return true;
+		}
+
+		void btnPaste_Click(object sender, EventArgs e)
+		{
+			PasteAndSelect();
 		}
 
 		void btnClear_Click(object sender, EventArgs e)
@@ -416,30 +320,24 @@ Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. */
 
 		void UpdateAddButton()
 		{
-			var selectedNames = new List<string>();
+			var selectedCount = 0;
 
 			foreach (var entry in allEntries)
 			{
-				if (entry.Selected) selectedNames.Add(entry.ID);
+				if (entry.Selected) selectedCount++;
 			}
 
-			if (selectedNames.Count == 0 && source.Count != 1)
+			if (selectedCount == 0 && source.Count != 1)
 			{
 				btnAdd.Text = "Add Reference";
 				btnAdd.Enabled = false;
-
-				toolTip.SetToolTip(btnAdd, null);
 			}
 			else
 			{
-				var text = string.Format(selectedNames.Count > 1 ? "Add {0} References" : "Add Reference", selectedNames.Count);
+				var text = string.Format(selectedCount > 1 ? "Add {0} References" : "Add Reference", selectedCount);
 				btnAdd.Text = text;
 
 				btnAdd.Enabled = true;
-
-				var tooltip = "Docear4Word will insert the following selected items:\r\n   " + string.Join(", ", selectedNames.ToArray());
-
-				toolTip.SetToolTip(btnAdd, tooltip);
 			}
 		}
 
@@ -796,7 +694,7 @@ Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. */
 	{
 		// See http://msdn.microsoft.com/en-us/library/ms649021%28v=vs.85%29.aspx
 		public const int WM_CLIPBOARDUPDATE = 0x031D;
-		//public static IntPtr HWND_MESSAGE = new IntPtr(-3);
+		public static IntPtr HWND_MESSAGE = new IntPtr(-3);
 
 		// See http://msdn.microsoft.com/en-us/library/ms632599%28VS.85%29.aspx#message_only
 		[DllImport("user32.dll", SetLastError = true)]
@@ -809,42 +707,7 @@ Valid separators for BibTeX keys are commas, semicolons, pipes, and spaces. */
 
 		// See http://msdn.microsoft.com/en-us/library/ms633541%28v=vs.85%29.aspx
 		// See http://msdn.microsoft.com/en-us/library/ms649033%28VS.85%29.aspx
-		//[DllImport("user32.dll", SetLastError = true)]
-		//public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 	}
-
-    public class TransparentControl: ContainerControl
-    {
-        const short WS_EX_TRANSPARENT = 0x20;
- 
-        public TransparentControl(Control controlToCover)
-        {
-            SetStyle(ControlStyles.Opaque, true);
-
-		//	UpdateStyles();
-            AutoScaleMode = AutoScaleMode.None;
- 
-            TabStop = false;
-
-	        Size = controlToCover.Size;
-	        Location = controlToCover.Location;
-	        Anchor = controlToCover.Anchor;
-	       // this.Visible = true;
-
-			controlToCover.Parent.Controls.Add(this);
-			BringToFront();
-        }
- 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-	            var createParams = base.CreateParams;
-
-                createParams.ExStyle = (createParams.ExStyle | WS_EX_TRANSPARENT);
-
-                return createParams;
-            }
-        }
-    }
 }

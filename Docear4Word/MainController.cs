@@ -136,7 +136,11 @@ namespace Docear4Word
     		addReferencesForm.Reset(currentDatabase);
 
 			var result = addReferencesForm.ShowDialog();
-			if (result == DialogResult.Cancel) return;
+			if (result == DialogResult.Cancel)
+			{
+				addReferencesForm.Dispose();
+				return;
+			}
 
 			// Keep a note of these as early as possible after closing dialog
 			var isSequence = (Control.ModifierKeys & Keys.Control) != 0;
@@ -157,14 +161,9 @@ namespace Docear4Word
 				{}
 			}
 
-			if (isSequence)
-			{
-	    		currentDocumentController.InsertCitationSequence(entryAndPagePairs, isLineSequence);
-			}
-			else
-			{
-				currentDocumentController.InsertCitation(entryAndPagePairs);
-			}
+			addReferencesForm.Dispose();
+
+			currentDocumentController.DoInsertCitation(entryAndPagePairs, isSequence, isLineSequence);
     	}
 
 		static void ShowNoDatabaseMessage()
@@ -288,25 +287,29 @@ namespace Docear4Word
 
     	public void DoShowAboutDialog()
     	{
-    		new AboutForm().ShowDialog();
+    		using (var aboutForm = new AboutForm())
+    		{
+    			aboutForm.ShowDialog();
+    		}
     	}
 
 		public void DoShowSettingsDialog()
 		{
-			var settingsDialog = new SettingsForm
-			             	{
-			             		UseDocearDefaultDatabase = Settings.Instance.UseDocearDefaultDatabase,
-			             		CustomDatabaseFilename = Settings.Instance.CustomDatabaseFilename,
-			             		RefreshUpdatesCitationsFromDatabase = Settings.Instance.RefreshUpdatesCitationsFromDatabase
-			             	};
-
-			if (settingsDialog.ShowDialog() == DialogResult.OK)
+			using (var settingsDialog = new SettingsForm
+			                            {
+				                            UseDocearDefaultDatabase = Settings.Instance.UseDocearDefaultDatabase,
+				                            CustomDatabaseFilename = Settings.Instance.CustomDatabaseFilename,
+				                            RefreshUpdatesCitationsFromDatabase = Settings.Instance.RefreshUpdatesCitationsFromDatabase
+			                            })
 			{
-				Settings.Instance.UseDocearDefaultDatabase = settingsDialog.UseDocearDefaultDatabase;
-				Settings.Instance.CustomDatabaseFilename = settingsDialog.CustomDatabaseFilename;
-				Settings.Instance.RefreshUpdatesCitationsFromDatabase = settingsDialog.RefreshUpdatesCitationsFromDatabase;
+
+				if (settingsDialog.ShowDialog() == DialogResult.OK)
+				{
+					Settings.Instance.UseDocearDefaultDatabase = settingsDialog.UseDocearDefaultDatabase;
+					Settings.Instance.CustomDatabaseFilename = settingsDialog.CustomDatabaseFilename;
+					Settings.Instance.RefreshUpdatesCitationsFromDatabase = settingsDialog.RefreshUpdatesCitationsFromDatabase;
+				}
 			}
-			
 		}
 
 		/// <summary>

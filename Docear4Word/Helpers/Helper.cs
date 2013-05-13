@@ -240,7 +240,28 @@ namespace Docear4Word
 				// If an entry cannot be found, we skip it
 				if (entry == null) continue;
 
-				result.Add(new EntryAndPagePair(entry, inlineCitation.CitationItems[i].Locator));
+				var authorProcessorControl = GetAuthorProcessorControl(inlineCitation.CitationItems[i]);
+
+				result.Add(new EntryAndPagePair(entry, inlineCitation.CitationItems[i].Locator)
+				           {
+					           AuthorProcessorControl = authorProcessorControl
+				           });
+			}
+
+			return result;
+		}
+
+		public static AuthorProcessorControl GetAuthorProcessorControl(JSInlineCitationItem inlineCitationItem)
+		{
+			var result = AuthorProcessorControl.Standard;
+
+			if (inlineCitationItem.AuthorOnly != null)
+			{
+				result = AuthorProcessorControl.AuthorOnly;
+			}
+			if (inlineCitationItem.SuppressAuthor != null)
+			{
+				result = AuthorProcessorControl.SuppressAuthor;
 			}
 
 			return result;

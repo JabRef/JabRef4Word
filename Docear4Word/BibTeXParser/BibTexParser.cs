@@ -168,9 +168,8 @@ namespace Docear4Word.BibTex
 						break;
 
 					default:
-						throw new NotSupportedException();
+						throw new TemplateParseException("Unexpected token: " + token.TokenType.ToString() , currentToken.Line, currentToken.Column);
 				}
-
 			}
 		}
 

@@ -1,11 +1,49 @@
 ﻿v1.10
 
-- Added radio buttons for AuthorProcessor Control
-- Added Paste and Select button
-- Added Tooltips
-- Added PersonalFolder item to About screen
-- Updated Citeproc to v1.0.459
-- Refocus to active document after each process call
+- EntryAndPagePair
+  - Added Authors
+  - Added AuthorProcessorControl
+- Added AuthorProcessorControl enum
+  - Standard, AuthorOnly, SuppressAuthor, SplitAuthor
+
+- ActiveDocument is focused after each process
+
+- Added FindMatch(string key) to BibTexDatabase
+- TagEntry now trims the DisplayText to ensure match
+- Added AuthorOnly and SuppressAuthor to inline citation items
+
+- Added LinqBridge.dll to project
+- Added AddFromDocear image
+
+- DocumentController
+  - DoInsertCitation now deals with author processor control
+  - DocumentControllerCitationInserter gets InsertItemsList() to optimize addding multiple cites
+  
+- AboutForm
+  - Now has BibTextFileFolder and PersonalData entries
+  
+- AddReferencesForm
+  - Added interop methods to listen to clipboasrd
+  - Added Paste and Select button
+  - Added PasteAndSelectInfo class
+  - Added tooltips
+  - Added AuthorProcessControl radio buttons
+  - Added TransparentControl to allow tooltip to be displayed on disabled button
+
+- Helper
+  - Added GetAuthorProcessControl method
+  - ExtractSource() now updates AuthorProcessorControl
+
+- Citeproc updated to v1.0.459
+
+- MainController
+  - Now disposes all forms after use
+  - Always calls DoInsertCitation instead of calling InsertCitationSequence and InsertCitation
+  
+- Version number now v1.1
+
+- Settings
+  - Gets GetDefaultDatabaseFolder()
 
 
 v1.02

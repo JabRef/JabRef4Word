@@ -23,7 +23,7 @@ namespace Docear4Word
 
 		public const string DatabaseEnvironmentVariableName = "docear_bibtex_current";
 
-		public static Settings Instance = new Settings();
+		public static readonly Settings Instance = new Settings();
 
 		BibTexDatabase lastLoadedDatabase;
 
@@ -77,6 +77,18 @@ namespace Docear4Word
 			set
 			{
 				RegistryHelper.WriteApplicationSwitch(RefreshUpdatesCitationsFromDatabaseName, value);
+			}
+		}
+
+		public string GetDefaultDatabaseFolder()
+		{
+			try
+			{
+				return Path.GetDirectoryName(GetDefaultDatabaseFilename());
+			}
+			catch
+			{
+				return string.Empty;
 			}
 		}
 

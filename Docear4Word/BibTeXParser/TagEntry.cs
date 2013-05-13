@@ -24,7 +24,7 @@ namespace Docear4Word.BibTex
 
 		public string Display
 		{
-			get { return display ?? (display = new LatexMiniParser(verbatim).Parse()); }
+			get { return display ?? (display = new LatexMiniParser(verbatim).Parse().Trim()); }
 		}
 
 		public string Verbatim

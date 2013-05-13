@@ -65,7 +65,6 @@ namespace Docear4Word
 
 			public void EditCitation(Field field, JSInlineCitation citation)
 			{
-
 				try
 				{
 					SuspendRedraw();
@@ -87,6 +86,59 @@ namespace Docear4Word
 					ApplyResult(jsResult);
 
 					UpdateBibliographyFields();
+				}
+				finally
+				{
+					ResumeRedraw();
+				}
+			}
+
+			public void InsertItemsList(Range range, IEnumerable<InsertionEntry> insertionEntries)
+			{
+				try
+				{
+					SuspendRedraw();
+
+					foreach (var insertionEntry in insertionEntries)
+					{
+						if (insertionEntry is InlineCitationInsertionEntry)
+						{
+							// Collapse the current selection
+							var selection = document.Application.Selection;
+							selection.Collapse(WdCollapseDirection.wdCollapseEnd);
+							range = selection.Range;
+
+							// Insert a field into the document
+							InsertCitationField(range, ((InlineCitationInsertionEntry) insertionEntry).JSInlineCitation);
+						}
+						else if (insertionEntry is SeparatorInsertionEntry)
+						{
+							var separatorInsertionEntry = (SeparatorInsertionEntry) insertionEntry;
+							if (separatorInsertionEntry.IsLineSequence)
+							{
+								document.Application.Selection.TypeText("\v");
+							}
+							else if (separatorInsertionEntry.IsSequence)
+							{
+								document.Application.Selection.TypeParagraph();
+							}
+							else
+							{
+								document.Application.Selection.TypeText(separatorInsertionEntry.DefaultText);
+							}
+						}
+					}
+
+					// Process all fields
+					var jsCitations = Reset();
+					var jsResult = citeProc.RestoreProcessorState(jsCitations);
+
+					// Apply the results
+					ApplyResult(jsResult);
+
+					// Update the bibliography if required
+					UpdateBibliographyFields();
+
 				}
 				finally
 				{
@@ -369,45 +421,19 @@ namespace Docear4Word
 
 	public class JSProcessCitationResult
 	{
-		readonly JSProcessCitationDataResult data;
 		readonly JSProcessCitationIndexStringPair[] items;
 
-		public JSProcessCitationResult(): this(null, null)
+		public JSProcessCitationResult(): this(null)
 		{}
 
-		public JSProcessCitationResult(JSProcessCitationDataResult data, JSProcessCitationIndexStringPair[] items)
+		public JSProcessCitationResult(JSProcessCitationIndexStringPair[] items)
 		{
-			this.data = data;
 			this.items = items ?? new JSProcessCitationIndexStringPair[0];
-		}
-
-		public bool BibChange
-		{
-			get { return data.BibChange; }
-		}
-
-		public JSProcessCitationDataResult Data
-		{
-			get { return data; }
 		}
 
 		public JSProcessCitationIndexStringPair[] Items
 		{
 			get { return items; }
-		}
-
-		public class JSProcessCitationDataResult: JSObjectWrapper
-		{
-			const string BibChangeName = "bibchange";
-
-			public JSProcessCitationDataResult(IJSContext context, object jsObject): base(context, jsObject)
-			{
-			}
-
-			public bool BibChange
-			{
-				get { return (bool) GetProperty(BibChangeName); }
-			}
 		}
 	}
 
@@ -425,7 +451,55 @@ namespace Docear4Word
 	public class JSProcessCitationIndexStringPair
 	{
 		public int Index { get; set; }
+		public string ID { get; set; }
+		public int NoteIndex { get; set; }
 		public string String { get; set; }
 	}
 
+	public abstract class InsertionEntry
+	{}
+
+	public class InlineCitationInsertionEntry: InsertionEntry
+	{
+		readonly JSInlineCitation jsInlineCitation;
+
+		public InlineCitationInsertionEntry(JSInlineCitation jsInlineCitation)
+		{
+			this.jsInlineCitation = jsInlineCitation;
+		}
+
+		public JSInlineCitation JSInlineCitation
+		{
+			get { return jsInlineCitation; }
+		}
+	}
+
+	public class SeparatorInsertionEntry: InsertionEntry
+	{
+		readonly string defaultText;
+		readonly bool isSequence;
+		readonly bool isLineSequence;
+
+		public SeparatorInsertionEntry(string defaultText, bool isSequence = false, bool isLineSequence = false)
+		{
+			this.defaultText = defaultText;
+			this.isSequence = isSequence;
+			this.isLineSequence = isLineSequence;
+		}
+
+		public string DefaultText
+		{
+			get { return defaultText; }
+		}
+
+		public bool IsSequence
+		{
+			get { return isSequence; }
+		}
+
+		public bool IsLineSequence
+		{
+			get { return isLineSequence; }
+		}
+	}
 }

@@ -19,7 +19,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddReferencesForm));
 			this.grid = new System.Windows.Forms.DataGridView();
 			this.colCheckbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.pagesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +40,7 @@
 			this.rbExact = new System.Windows.Forms.RadioButton();
 			this.btnClearFilter = new System.Windows.Forms.Button();
 			this.btnChooseDatabase = new System.Windows.Forms.Button();
-			this.mainPanel = new System.Windows.Forms.Panel();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.btnPaste = new System.Windows.Forms.Button();
 			this.pnlAuthorControl = new System.Windows.Forms.Panel();
 			this.rbAuthorStandard = new System.Windows.Forms.RadioButton();
@@ -49,11 +48,10 @@
 			this.rbAuthorSuppressAuthor = new System.Windows.Forms.RadioButton();
 			this.rbSplitAuthor = new System.Windows.Forms.RadioButton();
 			this.lblFiller = new System.Windows.Forms.Label();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.footer = new Docear4Word.Forms.DialogFooter();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bsSelectableReferences)).BeginInit();
-			this.mainPanel.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.pnlAuthorControl.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -175,7 +173,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFilter.Location = new System.Drawing.Point(52, 12);
 			this.txtFilter.Name = "txtFilter";
-			this.txtFilter.Size = new System.Drawing.Size(400, 20);
+			this.txtFilter.Size = new System.Drawing.Size(426, 20);
 			this.txtFilter.TabIndex = 1;
 			this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
 			this.txtFilter.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtFilter_PreviewKeyDown);
@@ -211,7 +209,6 @@
 			this.btnAdd.Size = new System.Drawing.Size(89, 22);
 			this.btnAdd.TabIndex = 3;
 			this.btnAdd.Text = "Add Reference";
-			this.toolTip.SetToolTip(this.btnAdd, " ");
 			this.btnAdd.UseVisualStyleBackColor = true;
 			// 
 			// btnClose
@@ -289,7 +286,7 @@
 			this.btnClearFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClearFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.btnClearFilter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-			this.btnClearFilter.Location = new System.Drawing.Point(452, 12);
+			this.btnClearFilter.Location = new System.Drawing.Point(478, 12);
 			this.btnClearFilter.Name = "btnClearFilter";
 			this.btnClearFilter.Size = new System.Drawing.Size(19, 20);
 			this.btnClearFilter.TabIndex = 11;
@@ -310,39 +307,37 @@
 			this.btnChooseDatabase.Visible = false;
 			this.btnChooseDatabase.Click += new System.EventHandler(this.btnChooseDatabase_Click);
 			// 
-			// mainPanel
+			// panel1
 			// 
-			this.mainPanel.Controls.Add(this.btnPaste);
-			this.mainPanel.Controls.Add(this.pnlAuthorControl);
-			this.mainPanel.Controls.Add(this.txtFilter);
-			this.mainPanel.Controls.Add(this.grid);
-			this.mainPanel.Controls.Add(this.btnClearFilter);
-			this.mainPanel.Controls.Add(this.lblFilter);
-			this.mainPanel.Controls.Add(this.rbExact);
-			this.mainPanel.Controls.Add(this.lblYear);
-			this.mainPanel.Controls.Add(this.cmbYear);
-			this.mainPanel.Controls.Add(this.rbOr);
-			this.mainPanel.Controls.Add(this.rbAnd);
-			this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.mainPanel.Location = new System.Drawing.Point(0, 0);
-			this.mainPanel.Name = "mainPanel";
-			this.mainPanel.Padding = new System.Windows.Forms.Padding(12);
-			this.mainPanel.Size = new System.Drawing.Size(830, 289);
-			this.mainPanel.TabIndex = 13;
+			this.panel1.Controls.Add(this.btnPaste);
+			this.panel1.Controls.Add(this.pnlAuthorControl);
+			this.panel1.Controls.Add(this.txtFilter);
+			this.panel1.Controls.Add(this.grid);
+			this.panel1.Controls.Add(this.btnClearFilter);
+			this.panel1.Controls.Add(this.lblFilter);
+			this.panel1.Controls.Add(this.rbExact);
+			this.panel1.Controls.Add(this.lblYear);
+			this.panel1.Controls.Add(this.cmbYear);
+			this.panel1.Controls.Add(this.rbOr);
+			this.panel1.Controls.Add(this.rbAnd);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Padding = new System.Windows.Forms.Padding(12);
+			this.panel1.Size = new System.Drawing.Size(830, 289);
+			this.panel1.TabIndex = 13;
 			// 
 			// btnPaste
 			// 
 			this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPaste.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.btnPaste.Enabled = false;
-			this.btnPaste.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnPaste.Image = global::Docear4Word.Images.AddFromDocear;
-			this.btnPaste.Location = new System.Drawing.Point(477, 10);
-			this.btnPaste.Margin = new System.Windows.Forms.Padding(0);
+			this.btnPaste.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.btnPaste.Location = new System.Drawing.Point(508, 12);
 			this.btnPaste.Name = "btnPaste";
-			this.btnPaste.Size = new System.Drawing.Size(64, 24);
+			this.btnPaste.Size = new System.Drawing.Size(31, 20);
 			this.btnPaste.TabIndex = 17;
-			this.toolTip.SetToolTip(this.btnPaste, resources.GetString("btnPaste.ToolTip"));
+			this.btnPaste.Text = "PM";
 			this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
 			// 
 			// pnlAuthorControl
@@ -427,14 +422,6 @@
 			this.lblFiller.Size = new System.Drawing.Size(14, 17);
 			this.lblFiller.TabIndex = 23;
 			// 
-			// toolTip
-			// 
-			this.toolTip.AutomaticDelay = 1000;
-			this.toolTip.IsBalloon = true;
-			this.toolTip.ShowAlways = true;
-			this.toolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-			this.toolTip.ToolTipTitle = "Docear";
-			// 
 			// footer
 			// 
 			this.footer.AutoSize = true;
@@ -455,7 +442,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnClose;
 			this.ClientSize = new System.Drawing.Size(830, 312);
-			this.Controls.Add(this.mainPanel);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.footer);
 			this.DoubleBuffered = true;
 			this.KeyPreview = true;
@@ -467,8 +454,8 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddReferencesForm_KeyDown);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bsSelectableReferences)).EndInit();
-			this.mainPanel.ResumeLayout(false);
-			this.mainPanel.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.pnlAuthorControl.ResumeLayout(false);
 			this.pnlAuthorControl.PerformLayout();
 			this.ResumeLayout(false);
@@ -499,7 +486,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn timestampDataGridViewTextBoxColumn;
 		private System.Windows.Forms.Button btnChooseDatabase;
-		private System.Windows.Forms.Panel mainPanel;
+		private System.Windows.Forms.Panel panel1;
 		private DialogFooter footer;
 		private System.Windows.Forms.Panel pnlAuthorControl;
 		private System.Windows.Forms.RadioButton rbAuthorSuppressAuthor;
@@ -508,6 +495,5 @@
 		private System.Windows.Forms.RadioButton rbSplitAuthor;
 		private System.Windows.Forms.Label lblFiller;
 		private System.Windows.Forms.Button btnPaste;
-		private System.Windows.Forms.ToolTip toolTip;
 	}
 }

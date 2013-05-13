@@ -255,6 +255,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_FC9F9F05079D28F4F279E33A8CCFBE3D"
+        "OwnerKey" = "8:_A2755A83C577A0F6092F11AC40EB13EF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FC9F9F05079D28F4F279E33A8CCFBE3D"
+        "OwnerKey" = "8:_1223A86871044FCB82F28F63D17AA70D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FC3D1A468FA94E8AA6CF97F2529395CA"
         "MsmSig" = "8:_UNDEFINED"
@@ -295,6 +307,12 @@
         "OwnerKey" = "8:_A2755A83C577A0F6092F11AC40EB13EF"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FC9F9F05079D28F4F279E33A8CCFBE3D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -303,7 +321,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Docear4WordSetup(1.0.1).msi"
+        "OutputFilename" = "8:Debug\\Docear4WordSetup(1.1.0).msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -1208,6 +1226,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FC9F9F05079D28F4F279E33A8CCFBE3D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                "ScatterAssemblies"
+                {
+                    "_FC9F9F05079D28F4F279E33A8CCFBE3D"
+                    {
+                    "Name" = "8:Extensibility.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Extensibility.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_D3166896672F4C2CB92062B90A3F2E2D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -1320,15 +1369,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Docear4Word"
-        "ProductCode" = "8:{DB61FFA6-6AE0-481D-823D-825E65E0DBE0}"
-        "PackageCode" = "8:{F2AB2001-A382-4EA1-B457-8F42D473D73E}"
+        "ProductCode" = "8:{DBC7D208-2249-4502-8545-A07B12C2BC8D}"
+        "PackageCode" = "8:{204C80AC-D1A0-4951-B4A7-887AD37C78ED}"
         "UpgradeCode" = "8:{3752430C-D094-4199-9C1A-042C2009F087}"
         "AspNetVersion" = "8:4.0.30220.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:Docear"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.docear.org"
