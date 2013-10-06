@@ -25,6 +25,7 @@ namespace Docear4Word
 		const string UpdateItemsCommand = "updateItems";
 
 		static readonly string MergedScript;
+		public static string ProcessorVersion { get; private set; }
 
 		static CiteProcRunner()
 		{
@@ -42,7 +43,12 @@ namespace Docear4Word
 		readonly object engine;
 
 		CiteProcRunner(): base(MergedScript)
-		{}
+		{
+			if (ProcessorVersion == null)
+			{
+				ProcessorVersion = Call("getCSLProcessorVersion").ToString();
+			}
+		}
 
 		public CiteProcRunner(StyleInfo style, GetDatabaseDelegate databaseProvider): this()
 		{

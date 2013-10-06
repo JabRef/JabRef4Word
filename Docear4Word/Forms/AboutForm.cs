@@ -40,6 +40,8 @@ namespace Docear4Word.Forms
 			Text = string.Format("About Docear4Word v{0}.{1}{2}", fileVersionInfo.ProductMajorPart, fileVersionInfo.ProductMinorPart, fileVersionInfo.ProductBuildPart);
 
 			lblCopyright.Text = string.Format("(C) 2012-{0} Docear by Joeran Beel, Stefan Langer, Marcel Genzmehr, and others", DateTime.Today.Year);
+
+			lblCiteProc.Text = lblCiteProc.Text + "\r\n(v" + CiteProcRunner.ProcessorVersion + ")";
 		}
 	}
 }

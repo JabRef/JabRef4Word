@@ -66,6 +66,10 @@ getcitationStringByIndex = function (engine, citationIndex) {
 	return engine.process_CitationCluster(citation.sortedItems, citation.citationID);
 }
 
+getCSLProcessorVersion = function() {
+	return CSL.PROCESSOR_VERSION;
+}
+
 CSL.Output.Formats.markup = {
     "text_escape": function (text) {
         if (!text) {

@@ -1,4 +1,12 @@
-﻿v1.10
+﻿v1.20
+- CiteProcRunner gets citeproc.js version on first use
+- Added Null checks for <field>.Code.Text to ContainsBibliography, EnumerateCSLFields, IsDocearField, IsCitationField, IsBibliographyField
+- AboutForm now displays the citeproc.js version number
+- Updated citeproc.js to 1.0.474 which fixes some major integration issues
+- Issue and Number Tags: If only one present in BibTex then is propagated to both Issue and Number in CSL
+
+
+v1.10
 
 - Added radio buttons for AuthorProcessor Control
 - Added Paste and Select button

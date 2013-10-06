@@ -418,6 +418,8 @@ namespace Docear4Word
 				foreach(Field field in document.Fields)
 				{
 					var fieldText = field.Code.Text;
+					if (fieldText == null) continue;
+
 					if (fieldText.Contains(DocearMarker) && fieldText.Contains(CslBibliographyMarker))
 					{
 						return true;
@@ -433,6 +435,8 @@ namespace Docear4Word
 			foreach(Field field in document.Fields)
 			{
 				var fieldText = field.Code.Text;
+				if (fieldText == null) continue;
+
 				if (!fieldText.Contains(DocearMarker)) continue;
 
 				yield return field;
@@ -464,21 +468,23 @@ namespace Docear4Word
 
 		static bool IsDocearField(Field field)
 		{
-			return field.Code.Text.Contains(DocearMarker);
+			var codeText = field.Code.Text;
+
+			return codeText != null && codeText.Contains(DocearMarker);
 		}
 
 		static bool IsCitationField(Field field)
 		{
 			var codeText = field.Code.Text;
 
-			return codeText.Contains(DocearMarker) && codeText.Contains(CslCitationMarker);
+			return codeText != null && codeText.Contains(DocearMarker) && codeText.Contains(CslCitationMarker);
 		}
 
 		public static bool IsBibliographyField(Field field)
 		{
 			var codeText = field.Code.Text;
 
-			return codeText.Contains(DocearMarker) && codeText.Contains(CslBibliographyMarker);
+			return codeText != null && codeText.Contains(DocearMarker) && codeText.Contains(CslBibliographyMarker);
 		}
 
 		public void MovePrevious()

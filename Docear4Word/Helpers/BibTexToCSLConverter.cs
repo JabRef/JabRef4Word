@@ -149,8 +149,24 @@ namespace Docear4Word
 
 				ApplyTag(CSLNames.Version, BibTexNames.Revision);
 
-				ApplyTag(CSLNames.Number, BibTexNames.Number);
-				ApplyTag(CSLNames.Issue, BibTexNames.Issue);
+				var numberTag = ExtractTag(BibTexNames.Number);
+				var issueTag = ExtractTag(BibTexNames.Issue);
+
+				if (numberTag != null && issueTag != null)
+				{
+					item.SetProperty(CSLNames.Number, numberTag.Display);
+					item.SetProperty(CSLNames.Issue, issueTag.Display);
+				}
+				else if (numberTag != null)
+				{
+					item.SetProperty(CSLNames.Number, numberTag.Display);
+					item.SetProperty(CSLNames.Issue, numberTag.Display);
+				}
+				else if (issueTag != null)
+				{
+					item.SetProperty(CSLNames.Number, issueTag.Display);
+					item.SetProperty(CSLNames.Issue, issueTag.Display);
+				}
 
 				ApplyPagesTag();
 

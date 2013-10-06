@@ -59,9 +59,9 @@
 			this.lblDevelopment = new System.Windows.Forms.Label();
 			this.lblSimon = new System.Windows.Forms.Label();
 			this.lblCopyright = new System.Windows.Forms.Label();
-			this.footer = new Docear4Word.Forms.DialogFooter();
 			this.lblPersonalDataFolder = new System.Windows.Forms.Label();
 			this.llPersonalDataFolder = new System.Windows.Forms.LinkLabel();
+			this.footer = new Docear4Word.Forms.DialogFooter();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -76,7 +76,7 @@
 			this.panel1.Controls.Add(this.btnClose);
 			this.panel1.Controls.Add(this.pictureBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 377);
+			this.panel1.Location = new System.Drawing.Point(0, 391);
 			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(680, 52);
@@ -324,7 +324,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(680, 429);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(680, 443);
 			this.tableLayoutPanel1.TabIndex = 15;
 			// 
 			// panel4
@@ -408,6 +408,7 @@
 			// 
 			// lblCiteProc
 			// 
+			this.lblCiteProc.AutoSize = true;
 			this.lblCiteProc.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lblCiteProc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCiteProc.Location = new System.Drawing.Point(3, 0);
@@ -493,19 +494,6 @@
 			this.lblCopyright.TabIndex = 2;
 			this.lblCopyright.Text = "(C) 2012 Docear by Joeran Beel, Stefan Langer, Marcel Genzmehr, and others";
 			// 
-			// footer
-			// 
-			this.footer.AutoSize = true;
-			this.footer.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.footer.Location = new System.Drawing.Point(0, 429);
-			this.footer.MaximumSize = new System.Drawing.Size(0, 21);
-			this.footer.MinimumSize = new System.Drawing.Size(0, 21);
-			this.footer.Name = "footer";
-			this.footer.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-			this.footer.Size = new System.Drawing.Size(680, 21);
-			this.footer.TabIndex = 2;
-			this.footer.TabStop = false;
-			// 
 			// lblPersonalDataFolder
 			// 
 			this.lblPersonalDataFolder.AutoSize = true;
@@ -534,11 +522,24 @@
 			this.llPersonalDataFolder.Text = "C:\\Users\\Simon\\Docear4Word\\BibTex";
 			this.llPersonalDataFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnLinkClicked);
 			// 
+			// footer
+			// 
+			this.footer.AutoSize = true;
+			this.footer.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.footer.Location = new System.Drawing.Point(0, 443);
+			this.footer.MaximumSize = new System.Drawing.Size(0, 21);
+			this.footer.MinimumSize = new System.Drawing.Size(0, 21);
+			this.footer.Name = "footer";
+			this.footer.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+			this.footer.Size = new System.Drawing.Size(680, 21);
+			this.footer.TabIndex = 2;
+			this.footer.TabStop = false;
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.btnClose;
 			this.CancelButton = this.btnClose;
-			this.ClientSize = new System.Drawing.Size(680, 454);
+			this.ClientSize = new System.Drawing.Size(680, 468);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.footer);
