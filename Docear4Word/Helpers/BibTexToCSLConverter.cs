@@ -260,13 +260,13 @@ namespace Docear4Word
 
 			void ApplyPagesTag()
 			{
-
 				ApplyTag(CSLNames.NumberOfPages, BibTexNames.NumPages);
 
 				var pagesTag = ExtractTag(BibTexNames.Pages);
 				if (pagesTag == null || string.IsNullOrEmpty(pagesTag.Display)) return;
 
 				var parser = new PageRangeParser(pagesTag.Display, item.NumberOfPages);
+				if (parser.Page == "-") return;
 //Debug.WriteLine(parser.ToString());
 
 				if (parser.Page != null) item.Page = parser.Page;

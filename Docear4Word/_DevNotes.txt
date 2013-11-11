@@ -1,4 +1,7 @@
-﻿v1.20
+﻿v1.21
+- '-' as the page caused problems - now ignored.
+
+v1.20
 - Citeproc updated to v1.0.474
 - citeproc version number extracted on first use and displayed on About form
 

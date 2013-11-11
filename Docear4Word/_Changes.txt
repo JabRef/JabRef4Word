@@ -1,4 +1,8 @@
-﻿v1.20
+﻿v1.22
+- Fixed issue where "-" as the Page in Bibtex caused a problem. Now ignored.
+
+
+v1.20
 - CiteProcRunner gets citeproc.js version on first use
 - Added Null checks for <field>.Code.Text to ContainsBibliography, EnumerateCSLFields, IsDocearField, IsCitationField, IsBibliographyField
 - AboutForm now displays the citeproc.js version number
