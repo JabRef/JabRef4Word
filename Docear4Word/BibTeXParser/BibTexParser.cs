@@ -34,7 +34,7 @@ namespace Docear4Word.BibTex
 					return old;
 				}
 
-				throw new TemplateParseException("Unexpected token: " + old.TokenType.ToString() + ". Was expecting: " + tokenType , currentToken.Line, currentToken.Column);
+				throw new TemplateParseException("Unexpected token: " + old.TokenType + ". Was expecting: " + tokenType, currentToken.Line, currentToken.Column);
 			}
 
 			return old;

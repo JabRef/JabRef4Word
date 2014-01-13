@@ -77,8 +77,13 @@ namespace Docear4Word
 
 		public static void ShowCorruptBibtexDatabaseMessage(string filename)
 		{
-			MessageBox.Show("The file \"" + filename + "\"\r\ncould not be loaded.\r\n\r\nPlease ensure that the content and encoding is valid.\r\n\r\nOr send your Bibtex database to help@docear.org and we will try to fix the problem.\r\n", "Docear4Word: BibTex database could not be loaded", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			
+			const string MessageTemplate = "The file \"{0}\"\r\ncould not be loaded.\r\n\r\n{1}\r\n\r\nOr send your Bibtex database to help@docear.org and we will try to fix the problem.\r\n";
+
+			var content = BibTexHelper.LastTemplateParseException == null
+				? "Please ensure that the content and encoding is valid."
+				: string.Format("Unexpected character at line {0}, column {1}\r\nPlease check the file at or around this location.", BibTexHelper.LastTemplateParseException.Line, BibTexHelper.LastTemplateParseException.Column);
+
+			MessageBox.Show(string.Format(MessageTemplate, filename, content), "Docear4Word: BibTex database could not be loaded", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 
 		public static string ExtractCitationJSON(Field field)

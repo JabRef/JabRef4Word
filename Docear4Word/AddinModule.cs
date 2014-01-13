@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using AddinExpress.MSO;
 
@@ -668,6 +669,10 @@ namespace Docear4Word
 
 		void adxWordEvents_WindowSelectionChange(object sender, object hostObj)
 		{
+			// Cursor is set to Wait by the time we get here, so
+			// all we can do is reset it
+			Cursor.Current = Cursors.IBeam;
+
 			try
 			{
 				mainController.OnWindowSelectionChange();

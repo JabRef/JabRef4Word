@@ -1,4 +1,10 @@
-﻿v1.22
+﻿v1.23
+- Parsing error in BibTex database now display line and column information
+- Updated citeproc.js to 1.0.517
+- Reset cursor to I-Beam at the start of WindowSelectionchange
+
+
+v1.22
 - Fixed issue where "-" as the Page in Bibtex caused a problem. Now ignored.
 
 

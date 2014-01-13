@@ -1,4 +1,12 @@
-﻿v1.21
+﻿v1.23
+- Can't prevent Cursor.Wait since it is already set to that by the time we get control
+  - Just reset to I-Beam
+- Bit difficult to preserve lexer info when exception thrown
+  - Store last exception so it can be picked up later
+- Name token
+  - Now uses original spec (not sure where from) to allow funny chars to be included
+
+v1.21
 - '-' as the page caused problems - now ignored.
 
 v1.20

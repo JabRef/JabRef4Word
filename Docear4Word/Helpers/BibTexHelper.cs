@@ -8,8 +8,12 @@ namespace Docear4Word
 {
 	public static class BibTexHelper
 	{
+		public static TemplateParseException LastTemplateParseException;
+
 		public static BibTexDatabase LoadBibTexDatabase(string filename)
 		{
+			LastTemplateParseException = null;
+
 			try
 			{
 				var text = LoadFile(filename);
@@ -27,7 +31,10 @@ namespace Docear4Word
 			}
 			catch(Exception ex)
 			{
+				LastTemplateParseException = ex as TemplateParseException;
+
 				Helper.LogUnexpectedException("Failed loading Bibtex database from '" + filename + "'", ex);
+
 				return null;
 			}
 		}
@@ -91,30 +98,4 @@ namespace Docear4Word
 			return parser.Parse();
 		}
 	}
-/*
-	public static class BibTexHelper
-	{
-		public static BibTexDatabase LoadBibTexDatabase(string filename, Encoding encoding = null)
-		{
-			try
-			{
-				var text = File.ReadAllText(filename, encoding ?? Encoding.UTF8);
-				var parser = new BibTexParser(new BibTexLexer(text));
-
-				return parser.Parse();
-			}
-			catch
-			{
-				return null;
-			}
-		}
-
-		public static BibTexDatabase CreateBibTexDatabase(string text)
-		{
-			var parser = new BibTexParser(new BibTexLexer(text));
-
-			return parser.Parse();
-		}
-	}
-*/
 }

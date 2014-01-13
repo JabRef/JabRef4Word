@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Docear4Word.BibTex
 {
@@ -57,6 +56,7 @@ namespace Docear4Word.BibTex
 			return data[position];
 		}
 
+/*
 		char LookAhead(int distance)
 		{
 			var aheadPosition = position + distance;
@@ -65,6 +65,7 @@ namespace Docear4Word.BibTex
 
 			return data[aheadPosition];
 		}
+*/
 
 		void Consume()
 		{
@@ -72,11 +73,13 @@ namespace Docear4Word.BibTex
 			column++;
 		}
 
+/*
 		void Consume(int count)
 		{
 			position += count;
 			column += count;
 		}
+*/
 
 		void NewLine()
 		{
@@ -84,10 +87,12 @@ namespace Docear4Word.BibTex
 			column = 1;
 		}
 
+/*
 		Token CreateToken(TokenType kind, string data)
 		{
 			return new Token(kind, data, startLine, startColumn, startPosition);
 		}
+*/
 
 		Token CreateToken(TokenType kind)
 		{
@@ -166,7 +171,6 @@ namespace Docear4Word.BibTex
 			startPosition = position;
 		}
 
-
 		public Token Next()
 		{
 			switch (currentMode)
@@ -228,16 +232,18 @@ namespace Docear4Word.BibTex
 					return ReadQuotedString();
 
 				default:
-					if (Char.IsLetter(ch) || ch == '_' || ch == '(' || Char.IsDigit(ch))
+					if (IsValidNameChar(ch))
+					//if (Char.IsLetter(ch) || ch == '_' || ch == '(' || Char.IsDigit(ch))
 					{
 						return ReadText();
 					}
 
 					Consume();
-					return CreateToken(TokenType.Ignore);
+					return CreateToken(TokenType.Text);
 			}
 		}
 
+/*
 		bool ReplaceWithAccent(char accentType, char toAccent, StringBuilder sb)
 		{
 			var accentedChar = SymbolHelper.GetAccentedChar(accentType, toAccent);
@@ -247,6 +253,7 @@ namespace Docear4Word.BibTex
 
 			return true;
 		}
+*/
 
 		Token ReadBracedString()
 		{
@@ -361,14 +368,47 @@ namespace Docear4Word.BibTex
 			}
 		}
 
+		// Implement this is it is supposed to be authoritative
+		// NAME [a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+
+		static bool IsValidNameChar(char c)
+		{
+			if (char.IsLetter(c)) return true;
+			if (char.IsDigit(c)) return true;
+
+			switch (c)
+			{
+				case '!': case '$': case '&': case '*': case '+': case '-': case '.': case '/': case ':': case ';': 
+				case '<': case '>': case '?': case '\\': case '^': case '_': case '`': case '|':
+					return true;
+
+				default:
+					return false;
+			}
+		}
+
+		Token ReadText()
+		{
+			StartRead();
+
+			Consume();
+
+			while(position < data.Length)
+			{
+				if (!IsValidNameChar(data[position])) return CreateToken(TokenType.Text);
+				Consume();
+			}
+
+			return CreateToken(TokenType.EOF);
+		}
+/*
 		Token ReadText()
 		{
 			StartRead();
 
 			while(++position < data.Length)
 			{
-				//TODO: Implement this is it is supposed to be authoritative
-				//NAME [a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+
+				// xTODO: Implement this is it is supposed to be authoritative
+				// NAME [a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+
 
 				switch (data[position])
 				{
@@ -389,6 +429,7 @@ namespace Docear4Word.BibTex
 
 			return CreateToken(TokenType.EOF);
 		}
+*/
 
 		#region Nested type: LexMode
 		enum LexMode
@@ -440,14 +481,12 @@ namespace Docear4Word.BibTex
 		{
 			get { return tokenType; }
 		}
-
 	}
 
 	internal enum TokenType
 	{
 		EOF,
 		At,
-		EntryType,
 		OpeningBrace,
 		ClosingBrace,
 		Text,
@@ -456,7 +495,5 @@ namespace Docear4Word.BibTex
 		QuotedString,
 		BracedString,
 		Hash,
-
-		Ignore
 	}
 }
